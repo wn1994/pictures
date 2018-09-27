@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+<mapper namespace="com.pictures.dao.UserDao">
+    <!-- 为Dao接口方法提供sql语句配置 -->
+    <select id="queryByPhoneNum" resultType="User">
+        SELECT *
+        FROM user
+        WHERE
+            phone_num = #{phoneNum}
+    </select>
+    <insert id="addUser">
+        INSERT INTO
+            user (phone_num, username, password)
+        VALUES
+            (#{phoneNum}, #{username}, #{password})
+    </insert>
+</mapper>

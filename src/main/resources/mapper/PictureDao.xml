@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pictures.dao.PictureDao">
+    <select id="queryById" resultType="Picture">
+        SELECT *
+        FROM picture
+        WHERE
+        id = #{id}
+    </select>
+    <select id="queryByUserId" resultType="Picture">
+        SELECT *
+        FROM picture
+        WHERE user_id = #{userId}
+    </select>
+    <select id="queryByUserIdGuest" resultType="Picture">
+        SELECT *
+        FROM picture
+        WHERE user_id = #{userId} and guest_visible = true
+    </select>
+    <insert id="insertPictureByUserId">
+        INSERT INTO
+        picture(user_id,name,path,guest_visible)
+        VALUES
+        (#{userId},#{name},#{path},#{guestVisible})
+    </insert>
+    <update id="updatePictureById">
+        UPDATE picture
+        SET name = #{name},guest_visible=#{guestVisible}
+        WHERE id = #{id}
+    </update>
+    <delete id="deletePictureById">
+        DELETE FROM picture
+        WHERE id = #{id}
+    </delete>
+</mapper>
