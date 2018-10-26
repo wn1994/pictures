@@ -9,7 +9,14 @@ import com.pictures.utils.UserToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,8 +48,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkValid(String token, String phoneNum) {
-        if (tokenSet == null)
+        if (tokenSet == null) {
             return false;
+        }
         UserToken currentToken = new UserToken(token, phoneNum);
         for (UserToken token1 : tokenSet) {
             if (token1.equals(currentToken)) {

@@ -12,6 +12,11 @@ import java.io.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
+
 @Controller
 public class FileServerController {
     private String imgRootPath = "C:/Users/DELL/IdeaProjects/pictures/src/main/webapp/resources/images/";

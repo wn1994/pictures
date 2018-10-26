@@ -13,14 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
 
 @Controller
 public class SignController {
@@ -40,7 +42,7 @@ public class SignController {
 
     // 选择注册或登录页面
     @RequestMapping(value = "/sign")
-    public String Sign() {
+    public String sign() {
         return "sign";
     }
 

@@ -16,6 +16,11 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
+
 @Service
 public class PictureServiceImpl implements PictureService {
     @Autowired

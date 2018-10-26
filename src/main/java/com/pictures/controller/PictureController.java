@@ -19,6 +19,11 @@ import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
+
 @Controller
 @RequestMapping("/user")
 public class PictureController {

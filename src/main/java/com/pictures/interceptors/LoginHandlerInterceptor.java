@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.regex.Pattern;
 
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
+
 public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private UserService userService;
@@ -43,9 +48,9 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
                     return false;
                 }
                 for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("token")) {
+                    if ("token".equals(cookie.getName())) {
                         token = cookie.getValue();
-                    } else if (cookie.getName().equals("phoneNum")) {
+                    } else if ("phoneNum".equals(cookie.getName())) {
                         phoneNum = cookie.getValue();
                     }
                 }

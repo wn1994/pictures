@@ -6,7 +6,11 @@ import java.io.Serializable;
 
 /**
  * ajax 请求的返回类型封装JSON结果
+ *
+ * @author wangning
+ * @date 2018/10/18 11:34
  */
+
 @Data
 public class BaseResult<T> implements Serializable {
     private boolean success;

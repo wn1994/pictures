@@ -5,6 +5,11 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
+
 public interface PictureDao {
     /**
      * 通过图片id查询，并且返回图片实体

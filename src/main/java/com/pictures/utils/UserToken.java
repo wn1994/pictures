@@ -5,6 +5,11 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+/**
+ * @author wangning
+ * @date 2018/10/18 11:34
+ */
+
 @Getter
 @Setter
 public class UserToken {
@@ -30,5 +35,10 @@ public class UserToken {
             return this.token.equals(anotherToken.getToken()) && this.phoneNum.equals(anotherToken.getPhoneNum());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return phoneNum.hashCode() + token.hashCode();
     }
 }
