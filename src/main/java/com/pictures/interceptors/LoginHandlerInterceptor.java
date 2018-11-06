@@ -1,8 +1,11 @@
 package com.pictures.interceptors;
 
+import com.pictures.aop.ServiceRedisAop;
 import com.pictures.entity.User;
 import com.pictures.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +22,7 @@ import java.util.regex.Pattern;
  */
 
 public class LoginHandlerInterceptor implements HandlerInterceptor {
+    private static final Logger LOG = LoggerFactory.getLogger(ServiceRedisAop.class);
     @Autowired
     private UserService userService;
 
@@ -29,7 +33,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         String pattern = ".*(.html|.js|.css|.jpg|.png|.gif|.ps|.jpeg)$";
         if (StringUtils.equals(requestURI, "/sign") || StringUtils.equals(requestURI, "/signup") ||
                 StringUtils.equals(requestURI, "/signin") || Pattern.matches(pattern, requestURI)) {
-            System.out.println("requestURI: " + requestURI);
+//            LOG.info("requestURI:" + requestURI);
             return true;
         } else {
             HttpSession session = request.getSession();

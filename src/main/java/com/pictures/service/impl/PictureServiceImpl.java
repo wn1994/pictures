@@ -1,5 +1,8 @@
 package com.pictures.service.impl;
 
+import com.pictures.aop.ServiceRedisAop;
+import com.pictures.cache.annotation.CacheEvict;
+import com.pictures.cache.annotation.Cacheable;
 import com.pictures.dao.PictureDao;
 import com.pictures.dao.UserDao;
 import com.pictures.entity.Picture;
@@ -7,6 +10,8 @@ import com.pictures.entity.User;
 import com.pictures.enums.ResultEnum;
 import com.pictures.exception.BaseException;
 import com.pictures.service.PictureService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,12 +28,14 @@ import java.util.UUID;
 
 @Service
 public class PictureServiceImpl implements PictureService {
+    private static final Logger LOG = LoggerFactory.getLogger(ServiceRedisAop.class);
     @Autowired
     private PictureDao pictureDao;
     @Autowired
     private UserDao userDao;
 
     @Override
+    @CacheEvict(key = "getPicturesByUserId", fieldKey = "#picture.userId")
     public ResultEnum insertPicture(Picture picture, MultipartFile imageFile) {
         String contentType = imageFile.getContentType();
         // 如果不是图片，抛出格式错误
@@ -60,6 +67,14 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
+    @Cacheable(key = "getPictureById", fieldKey = "#id")
+    public Picture getPicture(long id) {
+        Picture picture = pictureDao.queryById(id);
+        return picture;
+    }
+
+    @Override
+    @CacheEvict(key = "getPictureById", fieldKey = "#picture.id")
     public ResultEnum updatePicture(Picture picture) {
         try {
             pictureDao.updatePictureById(picture.getId(), picture.getName(), picture.isGuestVisible());
@@ -70,29 +85,26 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public List<Picture> listPictures(long userId) {
-        List<Picture> pictures = pictureDao.queryByUserId(userId);
-        return pictures;
-    }
-
-    @Override
-    public List<Picture> listPicturesGuests(String phoneNum) {
-        User user = userDao.queryByPhoneNum(phoneNum);
-        return pictureDao.queryByUserIdGuest(user.getId());
-    }
-
-    @Override
-    public Picture getPictureDetail(long pictureId) {
-        Picture picture = pictureDao.queryById(pictureId);
-        return picture;
-    }
-
-    @Override
+    @CacheEvict(key = "getPictureById", fieldKey = "#id")
     public ResultEnum deletePicture(long id) {
         if (pictureDao.deletePictureById(id) == 1) {
             return ResultEnum.DELETE_PICTURE_SUCCESS;
         } else {
             throw new BaseException(ResultEnum.DB_DELETE_RESULT_ERROR.getMsg());
         }
+    }
+
+    @Override
+    @Cacheable(key = "getPicturesByUserId", fieldKey = "#userId", isList = true, contentClass = "com.pictures.entity.Picture")
+    public List<Picture> listPictures(long userId) {
+        List<Picture> pictures = pictureDao.queryByUserId(userId);
+        return pictures;
+    }
+
+    @Override
+    @Cacheable(key = "getPicturesByPhoneNum", fieldKey = "#phoneNum", isList = true, contentClass = "com.pictures.entity.Picture")
+    public List<Picture> listGuestPictures(String phoneNum) {
+        User user = userDao.queryByPhoneNum(phoneNum);
+        return pictureDao.queryByUserIdGuest(user.getId());
     }
 }

@@ -6,6 +6,8 @@ import lombok.Setter;
 import java.util.UUID;
 
 /**
+ * 生成用户session所需的token
+ *
  * @author wangning
  * @date 2018/10/18 11:34
  */

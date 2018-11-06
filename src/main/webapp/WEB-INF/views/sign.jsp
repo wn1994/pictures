@@ -12,8 +12,8 @@
 </head>
 <body>
 <form>
-    <a href="signup">sign up</a><br>
-    <a href="signin">sign in</a>
+    <a href="signup">注册</a><br>
+    <a href="signin">登录</a>
 </form>
 </body>
 </html>

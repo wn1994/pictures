@@ -80,7 +80,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
     @Override
     public void logout(String token, String phoneNum) {
         UserToken currentToken = new UserToken(token, phoneNum);

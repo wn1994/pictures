@@ -33,14 +33,20 @@ public class SignController {
         super();
     }
 
-    // spring推荐在构造器中引入依赖
+    /**
+     * spring推荐在构造器中引入依赖
+     */
     @Autowired
     public SignController(UserService userService) {
         super();
         this.userService = userService;
     }
 
-    // 选择注册或登录页面
+    /**
+    * 选择注册或登录页面
+    *
+    * @return jsp页面
+     */
     @RequestMapping(value = "/sign")
     public String sign() {
         return "sign";

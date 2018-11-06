@@ -32,20 +32,20 @@ public class PictureServiceImplTest extends BaseTest {
     }
 
     @Test
-    public void testListPicturesGuests() {
-        System.out.println("testListPicturesGuests");
+    public void testListGuestPictures() {
+        System.out.println("testListGuestPictures");
         String phoneNum = "18810000000";
-        List<Picture> pictures = pictureService.listPicturesGuests(phoneNum);
+        List<Picture> pictures = pictureService.listGuestPictures(phoneNum);
         for (Picture picture : pictures) {
             System.out.println(picture);
         }
     }
 
     @Test
-    public void testGetPictureDetail() {
-        System.out.println("getPictureDetail");
+    public void testGetPicture() {
+        System.out.println("getPicture");
         long pictureId = 1;
-        Picture picture = pictureService.getPictureDetail(pictureId);
+        Picture picture = pictureService.getPicture(pictureId);
         System.out.println(picture);
     }
 }

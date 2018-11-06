@@ -18,9 +18,9 @@ public interface PictureService {
 
     List<Picture> listPictures(long userId);
 
-    List<Picture> listPicturesGuests(String phoneNum);
+    List<Picture> listGuestPictures(String phoneNum);
 
-    Picture getPictureDetail(long pictureId);
+    Picture getPicture(long id);
 
     ResultEnum deletePicture(long id);
 }

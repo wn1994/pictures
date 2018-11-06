@@ -8,6 +8,7 @@ function updatePicture() {
 
     var current_url = location.href;
     var suffix = current_url.substr(current_url.lastIndexOf("/") + 1);
+    var redirect_url = current_url.substr(0,current_url.lastIndexOf("/"));
     $.ajax({
         type: "PUT",
         // url: "/picture/" + suffix,   不写url，直接提交到当前url
@@ -17,7 +18,7 @@ function updatePicture() {
         data: JSON.stringify(data),
         success: function (data) {
             if (data.success === true) {
-                alert("success");
+                window.location.href=redirect_url;
             }
             else {
                 alert(data.msg);
