@@ -3,9 +3,11 @@ package com.pictures.aop;
 import com.pictures.cache.RedisCache;
 import com.pictures.cache.annotation.CacheEvict;
 import com.pictures.cache.annotation.Cacheable;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,8 +88,8 @@ public class ServiceRedisAop {
     /**
      * 清除缓存
      */
-    @Around("@annotation(com.pictures.cache.annotation.CacheEvict)")
-    public Object evictCache(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Before("@annotation(com.pictures.cache.annotation.CacheEvict)")
+    public void evictCache(JoinPoint joinPoint) throws Throwable {
         // 得到被代理的方法
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         // 得到被代理的方法上的注解
@@ -97,7 +99,6 @@ public class ServiceRedisAop {
         cache.deleteCache(cacheKey);
         // 单个picture元素修改时，其列表的cache也需要修改，因此也删除列表缓存
         cache.deleteCacheWithPattern("getPictures*");
-        return joinPoint.proceed();
     }
 
     /**
@@ -107,7 +108,7 @@ public class ServiceRedisAop {
      * @param key    cacheable.fieldKey(),如"#id"
      * @param method 被注解的方法对象
      * @param args   被注解的方法参数
-     * @return
+     * @return 解析出来的唯一标识，如id
      */
     private long parseKey(String key, Method method, Object[] args) {
         // 获取被拦截方法参数名列表(使用Spring支持类库)
