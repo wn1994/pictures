@@ -23,6 +23,7 @@
     <!--配置基于注解的声明式事务-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <!--AOP-->
     <!-- 激活组件扫描功能,扫描aop的相关组件组件 -->
     <context:component-scan base-package="com.pictures.aop"/>
     <!-- 启动对@AspectJ注解的支持 -->

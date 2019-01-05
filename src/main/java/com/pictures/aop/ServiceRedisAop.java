@@ -62,6 +62,7 @@ public class ServiceRedisAop {
                 try {
                     cache.putListCache(cacheKey, result);
                 } catch (RuntimeException e) {
+                    LOG.error(e.getMessage());
                     LOG.info("数据有误，添加cache失败！");
                 }
             }
@@ -78,6 +79,7 @@ public class ServiceRedisAop {
                 try {
                     cache.putCache(cacheKey, result);
                 } catch (RuntimeException e) {
+                    LOG.error(e.getMessage(),e);
                     LOG.info("数据有误，添加cache失败！");
                 }
             }

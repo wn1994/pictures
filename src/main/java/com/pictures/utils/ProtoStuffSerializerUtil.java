@@ -26,7 +26,7 @@ public class ProtoStuffSerializerUtil {
      */
     public static <T> byte[] serialize(T obj) throws RuntimeException {
         if (obj == null) {
-            throw new RuntimeException("序列化对象(" + obj + ")!");
+            throw new RuntimeException("序列化对象(" + obj + ")为空!");
         }
         @SuppressWarnings("unchecked")
         Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(obj.getClass());
@@ -72,7 +72,7 @@ public class ProtoStuffSerializerUtil {
      */
     public static <T> byte[] serializeList(List<T> objList) throws RuntimeException {
         if (objList == null || objList.isEmpty()) {
-            throw new RuntimeException("序列化对象列表(" + objList + ")参数异常!");
+            throw new RuntimeException("序列化对象列表(" + objList + ")为空!");
         }
         @SuppressWarnings("unchecked")
         Schema<T> schema = (Schema<T>) RuntimeSchema.getSchema(objList.get(0).getClass());

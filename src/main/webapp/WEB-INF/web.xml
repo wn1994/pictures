@@ -17,11 +17,4 @@
         <servlet-name>SpringMvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <!--<context-param>-->
-        <!--<param-name>webAppRootKey</param-name>-->
-        <!--<param-value>localhost:8080</param-value>-->
-    <!--</context-param>-->
-    <!--<listener>-->
-        <!--<listener-class>org.springframework.web.WebApplicationInitializer</listener-class>-->
-    <!--</listener>-->
 </web-app>

@@ -6,12 +6,13 @@ import com.pictures.enums.ResultEnum;
 import com.pictures.exception.BaseException;
 import com.pictures.service.UserService;
 import com.pictures.utils.UserToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author wangning
@@ -23,7 +24,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    private static Set<UserToken> tokenSet = new HashSet<>();
+    private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Set<UserToken> tokenSet = new CopyOnWriteArraySet<>();
 
     @Override
     public ResultEnum insertUser(User newUser) {
@@ -48,9 +50,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkValid(String token, String phoneNum) {
-        if (tokenSet == null) {
-            return false;
-        }
         UserToken currentToken = new UserToken(token, phoneNum);
         for (UserToken token1 : tokenSet) {
             if (token1.equals(currentToken)) {
@@ -64,12 +63,11 @@ public class UserServiceImpl implements UserService {
     public User setToken(User user) {
         /* 检测由于每次调用UserToken(String phoneNum)构造器都会生成不同的tokenId，会产生phoneNum相同但token不同的现象，
         导致同一phoneNum被重复插入tokenSet，所以在插入新的token时要删除旧的token。*/
-        if (tokenSet != null && tokenSet.size() > 0) {
-            Iterator<UserToken> it = tokenSet.iterator();
-            while (it.hasNext()) {
-                UserToken userToken = it.next();
-                if (userToken.getPhoneNum().equals(user.getPhoneNum())) {
-                    it.remove();
+        if (tokenSet.size() > 0) {
+            LOG.info("current users' number:" + tokenSet.size());
+            for(UserToken userToken:tokenSet){
+                if(userToken.getPhoneNum().equals(user.getPhoneNum())){
+                    tokenSet.remove(userToken);
                     break;
                 }
             }
@@ -83,13 +81,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void logout(String token, String phoneNum) {
         UserToken currentToken = new UserToken(token, phoneNum);
-        // 删除登录条目
-        if (tokenSet != null && tokenSet.size() > 0) {
-            Iterator<UserToken> it = tokenSet.iterator();
-            while (it.hasNext()) {
-                UserToken userToken = it.next();
-                if (userToken.equals(currentToken)) {
-                    it.remove();
+        /* 删除登录条目 */
+        if (tokenSet.size() > 0) {
+            for(UserToken userToken:tokenSet){
+                if(userToken.equals(currentToken)){
+                    tokenSet.remove(userToken);
                     break;
                 }
             }

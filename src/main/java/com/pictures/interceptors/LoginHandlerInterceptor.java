@@ -33,7 +33,6 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         String pattern = ".*(.html|.js|.css|.jpg|.png|.gif|.ps|.jpeg)$";
         if (StringUtils.equals(requestURI, "/sign") || StringUtils.equals(requestURI, "/signup") ||
                 StringUtils.equals(requestURI, "/signin") || Pattern.matches(pattern, requestURI)) {
-//            LOG.info("requestURI:" + requestURI);
             return true;
         } else {
             HttpSession session = request.getSession();

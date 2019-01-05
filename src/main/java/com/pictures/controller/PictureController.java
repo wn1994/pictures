@@ -1,14 +1,11 @@
 package com.pictures.controller;
 
-import com.pictures.aop.ServiceRedisAop;
 import com.pictures.dto.BaseResult;
 import com.pictures.entity.Picture;
 import com.pictures.entity.User;
 import com.pictures.enums.ResultEnum;
 import com.pictures.exception.BaseException;
 import com.pictures.service.PictureService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +27,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Controller
 @RequestMapping("/user")
 public class PictureController {
-    private static final Logger LOG = LoggerFactory.getLogger(ServiceRedisAop.class);
     private PictureService pictureService;
 
     public PictureController() {
