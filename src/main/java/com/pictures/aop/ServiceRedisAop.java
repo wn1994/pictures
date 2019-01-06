@@ -60,7 +60,7 @@ public class ServiceRedisAop {
                 result = (List) joinPoint.proceed();
                 //后置：将数据库查到的数据保存到Redis
                 try {
-                    cache.putListCache(cacheKey, result);
+                    cache.putListCacheWithExpireTime(cacheKey, result, 600);
                 } catch (RuntimeException e) {
                     LOG.error(e.getMessage());
                     LOG.info("数据有误，添加cache失败！");
@@ -77,9 +77,9 @@ public class ServiceRedisAop {
                 result = joinPoint.proceed();
                 //后置：将数据库查到的数据保存到Redis
                 try {
-                    cache.putCache(cacheKey, result);
+                    cache.putCacheWithExpireTime(cacheKey, result, 600);
                 } catch (RuntimeException e) {
-                    LOG.error(e.getMessage(),e);
+                    LOG.error(e.getMessage(), e);
                     LOG.info("数据有误，添加cache失败！");
                 }
             }
@@ -124,6 +124,7 @@ public class ServiceRedisAop {
         for (int i = 0; i < paraNameArr.length; i++) {
             context.setVariable(paraNameArr[i], args[i]);
         }
-        return parser.parseExpression(key).getValue(context, long.class);
+        Long ret = parser.parseExpression(key).getValue(context, long.class);
+        return ret != null ? ret : 0L;
     }
 }
