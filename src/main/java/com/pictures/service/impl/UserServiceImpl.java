@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         /* 检测由于每次调用UserToken(String phoneNum)构造器都会生成不同的tokenId，会产生phoneNum相同但token不同的现象，
         导致同一phoneNum被重复插入tokenSet，所以在插入新的token时要删除旧的token。*/
         if (tokenSet.size() > 0) {
-            LOG.info("current users' number:" + tokenSet.size());
+            LOG.info("current number of users:" + tokenSet.size());
             for(UserToken userToken:tokenSet){
                 if(userToken.getPhoneNum().equals(user.getPhoneNum())){
                     tokenSet.remove(userToken);
